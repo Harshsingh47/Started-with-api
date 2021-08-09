@@ -28,5 +28,5 @@ class PostSerializer(serializers.ModelSerializer):
 class CreatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Creators
-        fields = ['id','Name','created','title','language']
+        fields = ['id','Name','title','language']
 

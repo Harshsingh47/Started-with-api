@@ -145,30 +145,125 @@ class CreateApi(ViewSet):
         return Response(response,status_code)
 
 
+    def createdata(self,request,**data):
+        objeect = Creators.objects.create(**request.data)
+        response = {
+            "success":True,
+            "message":"object created"
+        }
+        status_code = status.HTTP_200_OK
+        return Response(response,status_code)
+
+# -----------------------------------------------------------------------------
+
+class Articleobjects(ViewSet):
+    def getarticle(self,request):
+        object = Aricle.objects.all().values()
+        print(object)
+        response = {
+            "data":object,
+            "success":True,
+            "message":"data received successfully"
+        }
+        status_code = status.HTTP_200_OK
+        return Response(response,status_code)
+
+    def createaricle(self,request,**data):
+
+        data = request.data
+        reporter = data["reporter"]
+        try:
+            c = Creators.objects.get(id=reporter)
+            data["reporter"] = c
+
+            objects = Aricle.objects.create(**request.data)
+            response = {
+                "success":True,
+                "message": " data created successfully"
+            }
+            status_code = status.HTTP_200_OK
+
+        except Creators.DoesNotExist:
+            response= {
+                "success":False,
+                "message":"Id does not exists in database"
+            }
+            status_code = status.HTTP_404_NOT_FOUND
+        return Response(response,status_code)
 
 
-    #
-    # def createdata(self,request,**data):
-    #     objeect = Creators.objects.create(**request.data)
-    #     response = {
-    #         "success":True,
-    #         "message":"object created"
-    #     }
-    #
-    # def updatedata(self,request,id,**data):
-    #     obj = Creators.objects.filter(id=id).update(**request.data)
-    #
+
+    def updatearticle(self,request,id,**data):
+        data = request.data
+        try:
+            x=Aricle.objects.filter(id=id).update(**request.data)
+            if x:
+                response={
+                    "success":True,
+                    "message":"data is updated"
+                }
+                status_code=status.HTTP_200_OK
+
+            else:
+                response={
+                    "success":False,
+                    "message":"Article is not exist"
+                }
+
+                status_code=status.HTTP_404_NOT_FOUND
+        except:
+            pass
+        return Response(response,status_code)
 
 
 
 
 
 
+    def deletearticle(self,request,id,**data):
+        data = Aricle.objects.get(id=id).delete()
+        response = {
+            "success":True,
+            "message":"data deleted"
+        }
+        status_code = status.HTTP_200_OK
+        return Response(response,status_code)
 
 
 
 
 
+class ArticleApi(ViewSet):
+    def getarticles(self,request):
+        data = Article.objects.all().values()
+        response = {
+            "data":data,
+            "success":True,
+            "message":"Data received"
+        }
+        status_code = status.HTTP_200_OK
+        return Response(response,status_code)
+
+    def addarticles(self,request,id):
+        data = request.data
+        pub_id = id
+        try:
+            a = Publication.objects.get(id=pub_id)
+            publications = data["publications"]
+            object =Article.objects.get(id=publications)
+            object.publications.add(a)
+            response = {
+                "success":True,
+                "message":"data created successfully"
+            }
+            status_code = status.HTTP_200_OK
+        except Publication.DoesNotExist:
+            response= {
+                "success":False,
+                "message":"Id does not exists in database"
+            }
+            status_code = status.HTTP_404_NOT_FOUND
+        return Response(response,status_code)
 
 
 

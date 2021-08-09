@@ -48,11 +48,8 @@ class Posts(models.Model):
 
 class Creators(models.Model):
     name = models.CharField(max_length=200)
-    created = models.DateField()
     title = models.CharField(max_length=200)
     language = models.TextField()
-
-
 
 
 class Aricle(models.Model):
@@ -61,7 +58,24 @@ class Aricle(models.Model):
     reporter = models.ForeignKey(Creators,on_delete=models.CASCADE)
 
 
+class Publication(models.Model):
+    title = models.CharField(max_length=30)
 
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+class Article(models.Model):
+    headline = models.CharField(max_length=100)
+    publications = models.ManyToManyField(Publication)
+
+    class Meta:
+        ordering = ['headline']
+
+    def __str__(self):
+        return self.headline
 
 
 

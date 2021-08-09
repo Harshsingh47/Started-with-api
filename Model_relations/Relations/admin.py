@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Posts,Creators,Aricle
+from .models import Posts,Creators,Aricle,Publication,Article
 # Register your models here.
 
 
@@ -8,3 +8,5 @@ admin.site.register(Aricle)
 # admin.site.register(Products)
 admin.site.register(Posts)
 admin.site.register(Creators)
+admin.site.register(Publication)
+admin.site.register(Article)

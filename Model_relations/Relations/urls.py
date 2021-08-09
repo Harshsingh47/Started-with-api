@@ -30,8 +30,26 @@ urlpatterns = [
     url(r'^^post/$', views.UserApi.as_view({'post':"createapi"}),name='post_task'),
     url(r'^update1/(?P<id>[0-9]+)/$', views.UserApi.as_view({'put':"update"}),name='update_task'),
     url(r'^delete/(?P<id>[0-9]+)/$', views.UserApi.as_view({'delete':"delete"}),name='delete_task'),
-    url(r'^get/$', views.CreateApi.as_view({"get": "getobject"}),
-        name='get_task'),
+    url(r'^get/object/$', views.CreateApi.as_view({"get": "getobject"}),
+        name='get_tasks'),
+    # --------------------------------------------------------------------------------------------------------------
+
+
+    url(r'^get/data/$', views.Articleobjects.as_view({"get": "getarticle"}),
+        name='get_taskss'),
+
+    url(r'^get/post/(?P<id>[0-9]+)/$', views.Articleobjects.as_view({"post": "createaricle"}),
+        name='get_data'),
+    url(r'^get/update/(?P<id>[0-9]+)/$', views.Articleobjects.as_view({"put": "updatearticle"}),
+        name='update_data'),
+    url(r'^get/delete/(?P<id>[0-9]+)/$', views.Articleobjects.as_view({"delete": "deletearticle"}),
+        name='delete_data'),
+    # -----------------------------------------------------------------------------------------------------------------
+
+    url(r'^get/objects/', views.ArticleApi.as_view({"get": "getarticles"}),
+        name='artice_get_data'),
+    url(r'^get/post_data/(?P<id>[0-9]+)/$', views.ArticleApi.as_view({"post": "addarticles"}),
+        name='artice_get_data'),
 
 
 ]
