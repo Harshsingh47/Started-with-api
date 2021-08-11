@@ -3,7 +3,7 @@ from django.http import HttpResponse,JsonResponse
 from django.views.decorators.csrf import  csrf_exempt
 from rest_framework.parsers import JSONParser
 from Relations.models import Posts
-from Relations.serializer import PostSerializer
+from .serializer import *
 from rest_framework.decorators import api_view
 from rest_framework import status
 from django.contrib.auth.models import User
@@ -76,11 +76,7 @@ def post_detail(request,pk, format=None):
     elif request.method=='DELETE':
         post.delete()
         return HttpResponse(status=status.HTTP_204_NO_CONTENT)
-
-
-
-
-
+# ----------------------------------------------------------------------------------------------------------------------
 class UserApi(ViewSet):
     def getapi(self,request):
         data = Creators.objects.all().values()
@@ -129,32 +125,11 @@ class UserApi(ViewSet):
         }
         status_code=status.HTTP_200_OK
         return Response(response,status_code)
-    
+
+# ----------------------------------------------------------------------------------------------------------------------
+# ----------------------------Many To one-------------------
 
 
-
-class CreateApi(ViewSet):
-    def getobject(self,request):
-        data = Creators.objects.all().values()
-        response ={
-            "data":data,
-            "success":True,
-            "message":"data received successfully"
-        }
-        status_code = status.HTTP_200_OK
-        return Response(response,status_code)
-
-
-    def createdata(self,request,**data):
-        objeect = Creators.objects.create(**request.data)
-        response = {
-            "success":True,
-            "message":"object created"
-        }
-        status_code = status.HTTP_200_OK
-        return Response(response,status_code)
-
-# -----------------------------------------------------------------------------
 
 class Articleobjects(ViewSet):
     def getarticle(self,request):
@@ -191,8 +166,6 @@ class Articleobjects(ViewSet):
             status_code = status.HTTP_404_NOT_FOUND
         return Response(response,status_code)
 
-
-
     def updatearticle(self,request,id,**data):
         data = request.data
         try:
@@ -215,11 +188,6 @@ class Articleobjects(ViewSet):
             pass
         return Response(response,status_code)
 
-
-
-
-
-
     def deletearticle(self,request,id,**data):
         data = Aricle.objects.get(id=id).delete()
         response = {
@@ -230,10 +198,11 @@ class Articleobjects(ViewSet):
         return Response(response,status_code)
 
 
-
-
+# ----------------------------------------------------------------------------------------------------------------------
+# ----------------------------Many To Many-------------------------------------------------
 
 class ArticleApi(ViewSet):
+
     def getarticles(self,request):
         data = Article.objects.all().values()
         response = {
@@ -249,6 +218,14 @@ class ArticleApi(ViewSet):
         pub_id = id
         try:
             a = Publication.objects.get(id=pub_id)
+
+        except Publication.DoesNotExist:
+            response= {
+                "success":False,
+                "message":"Id does not exists in database"
+            }
+            status_code = status.HTTP_404_NOT_FOUND
+        else:
             publications = data["publications"]
             object =Article.objects.get(id=publications)
             object.publications.add(a)
@@ -257,13 +234,201 @@ class ArticleApi(ViewSet):
                 "message":"data created successfully"
             }
             status_code = status.HTTP_200_OK
-        except Publication.DoesNotExist:
+
+        return Response(response,status_code)
+
+    def createarticles(self,request,**data):
+
+        data = request.data
+        print(data)
+        publications = data['publications']
+        print(publications)
+        p = Publication.objects.get(id = publications)
+
+        del data['publications']
+
+        object = Article.objects.create(**request.data)
+        object.publications.add(p)
+        response = {
+            "success":True,
+            "message":"Data created"
+        }
+
+        status_code = status.HTTP_200_OK
+        return Response(response,status_code)
+
+
+    def updatearticle(self,request,id,**data):
+        group_id = id
+        data=request.data
+        publications = data['publications']
+        headline = data['headline']
+
+
+        article_object =Article.objects.get(id= group_id)
+        pub_object = Publication.objects.get(id = publications )
+
+        article_object.publications.clear()
+        article_object.publications.add(pub_object)
+
+        x = Article.objects.filter(id=group_id).update(headline=headline)
+
+
+        response ={
+            "success":True,
+            "message":"data Updated"
+        }
+        status_code = status.HTTP_200_OK
+        return Response(response,status_code)
+
+
+    def deletearticles(self,request,id):
+        object = Article.objects.get(id=id).delete()
+        response={
+            "success":True,
+            "message":"data deleted"
+        }
+        status_code = status.HTTP_200_OK
+        return Response(response,status_code)
+
+########################################################################################################################
+
+
+
+class Userserializer(ViewSet):
+    def getuser(self,request):
+        serializer = UserdetailSerializer(UserDetails.objects.all(),many=True)
+        return Response(serializer.data)
+
+
+    def createuser(self,request,**data):
+        data = request.data
+        serializer = UserdetailSerializer(data=data)
+        if serializer.is_valid():
+            user = UserDetails.objects.create(**request.data)
+            response ={
+                "success":True,
+                "message":"data created"
+            }
+            status_code=status.HTTP_200_OK
+        else:
+            response = {
+                "success":False,
+                "errors":serializer.errors
+            }
+            status_code=status.HTTP_404_NOT_FOUND
+        return Response(response,status_code)
+
+
+    def updateuser(self,request,id,**data):
+        data = request.data
+        try:
+            use = UserDetails.objects.get(id=id)
+            serializer = UserdetailSerializer(use,data=data)
+            if serializer.is_valid():
+                user = UserDetails.objects.filter(id=id).update(**request.data)
+
+                response ={
+                    "success":True,
+                    "message":"data updated"
+                }
+                status_code=status.HTTP_200_OK
+            else:
+                response = {
+                    "success":False,
+                    "errors":serializer.errors
+                }
+                status_code=status.HTTP_404_NOT_FOUND
+        except UserDetails.DoesNotExist:
             response= {
                 "success":False,
-                "message":"Id does not exists in database"
+                "mesage":"Id does not exist"
+            }
+            status_code= status.HTTP_404_NOT_FOUND
+        return Response(response,status_code)
+
+    def deleteuser(self,request,id):
+        try:
+            user = UserDetails.objects.get(id=id).delete()
+        except UserDetails.DoesNotExist:
+            response={
+                "success":False,
+                "message":"Id does not exists"
+            }
+            status_code = status.HTTP_404_NOT_FOUND
+        else:
+            response={
+                "success":True,
+                "message":"data deleted"
+            }
+            status_code = status.HTTP_200_OK
+
+        return Response(response,status_code)
+
+
+
+
+
+
+
+
+class Createserialize(ViewSet):
+    def create(self,request,**data):
+        data = request.data.dict()
+        print(data)
+        serializer = WorkingSerializer(data = data)
+        if serializer.is_valid():
+            user =data['user']
+            u = User.objects.get(id=user)
+            data["user"] = u
+
+            obj = Working.objects.create(**data)
+            response = {
+                "success":True,
+                "message":"successful"
+            }
+            status_code = status.HTTP_200_OK
+        else:
+            response = {
+                "success":False,
+                "errors":serializer.errors
+            }
+            status_code =status.HTTP_404_NOT_FOUND
+        return Response(response,status_code)
+
+    def updateworking(self,requeset,id,**data):
+        data = requeset.data.dict()
+        print(data)
+        user = Working.objects.get(id=id)
+        obj = User.objects.get(id=id)
+
+        serializer = WorkingSerializer(user,data)
+        if serializer.is_valid():
+            object = Working.objects.filter(id=id).update(**requeset.data)
+
+            response = {
+                "success" : True,
+                "message" : "Data updated"
+            }
+            status_code = status.HTTP_200_OK
+        else:
+            response = {
+                "success" : False,
+                "errors" : serializer.errors
             }
             status_code = status.HTTP_404_NOT_FOUND
         return Response(response,status_code)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

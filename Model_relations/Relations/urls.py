@@ -14,9 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
 from django.urls import path,include
 from . import views
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path('', views.home,name='home'),
@@ -30,10 +34,9 @@ urlpatterns = [
     url(r'^^post/$', views.UserApi.as_view({'post':"createapi"}),name='post_task'),
     url(r'^update1/(?P<id>[0-9]+)/$', views.UserApi.as_view({'put':"update"}),name='update_task'),
     url(r'^delete/(?P<id>[0-9]+)/$', views.UserApi.as_view({'delete':"delete"}),name='delete_task'),
-    url(r'^get/object/$', views.CreateApi.as_view({"get": "getobject"}),
-        name='get_tasks'),
-    # --------------------------------------------------------------------------------------------------------------
 
+    # --------------------------------------------------------------------------------------------------------------
+    # -------------------------------Many to one--------------------------------------------------------------------
 
     url(r'^get/data/$', views.Articleobjects.as_view({"get": "getarticle"}),
         name='get_taskss'),
@@ -45,13 +48,45 @@ urlpatterns = [
     url(r'^get/delete/(?P<id>[0-9]+)/$', views.Articleobjects.as_view({"delete": "deletearticle"}),
         name='delete_data'),
     # -----------------------------------------------------------------------------------------------------------------
-
+    # ------------------------Many to Many-----------------------------------------------------------------------------
     url(r'^get/objects/', views.ArticleApi.as_view({"get": "getarticles"}),
         name='artice_get_data'),
     url(r'^get/post_data/(?P<id>[0-9]+)/$', views.ArticleApi.as_view({"post": "addarticles"}),
         name='artice_get_data'),
+    url(r'^get/post_create_data/$', views.ArticleApi.as_view({"post": "createarticles"}),
+        name='artice_create_data'),
+    url(r'^get/update_article/(?P<id>[0-9]+)/$', views.ArticleApi.as_view({"put": "updatearticle"}),
+        name='update_data'),
+    url(r'^get/delete_article/(?P<id>[0-9]+)/$', views.ArticleApi.as_view({"delete": "deletearticles"}),
+        name='delete_data'),
+#     __________________________________________________________________________________________________________________
+
+
+
+    # ---------------------------------
+    url(r'^get/user_serialize/$', views.Userserializer.as_view({"get": "getuser"}),
+        name='create_data'),
+    url(r'^get/create_serialize/$', views.Userserializer.as_view({"post": "createuser"}),
+        name='create_data'),
+
+     url(r'^get/update_serialize/(?P<id>[0-9]+)/$', views.Userserializer.as_view({"put": "updateuser"}),
+        name='update_data'),
+
+    url(r'^get/delete_serialize/(?P<id>[0-9]+)/$', views.Userserializer.as_view({"delete": "deleteuser"}),
+        name='delete_data'),
+
+     # ----------------------------------------------------------------------------------------
+
+     url(r'^get/serialize/$', views.Createserialize.as_view({"post": "create"}),
+        name='create_data'),
+
+    url(r'^get/serialize_update/(?P<id>[0-9]+)/$', views.Createserialize.as_view({"put": "updateworking"}),
+        name='update_data'),
 
 
 ]
 
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

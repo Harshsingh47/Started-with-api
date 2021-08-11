@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+
+
 # Create your models here.
 
 
@@ -45,6 +47,7 @@ class Posts(models.Model):
     created = models.DateField()
 
 
+# -----------------------------------------------------------------------------------------------------------------
 
 class Creators(models.Model):
     name = models.CharField(max_length=200)
@@ -55,7 +58,10 @@ class Creators(models.Model):
 class Aricle(models.Model):
     headline = models.CharField(max_length=200)
     date = models.DateTimeField(auto_now=True)
-    reporter = models.ForeignKey(Creators,on_delete=models.CASCADE)
+    reporter = models.ForeignKey(Creators, on_delete=models.CASCADE)
+
+
+# ---------------------------------------------------------------------------------------------------------------
 
 
 class Publication(models.Model):
@@ -66,6 +72,7 @@ class Publication(models.Model):
 
     def __str__(self):
         return self.title
+
 
 class Article(models.Model):
     headline = models.CharField(max_length=100)
@@ -78,21 +85,18 @@ class Article(models.Model):
         return self.headline
 
 
+class UserDetails(models.Model):
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
+    address = models.CharField(max_length=100)
 
 
+class Working(models.Model):
+    name = models.CharField(max_length=200)
+    address = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='media', default='default.jpg')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def __str__(self):
+        return self.name

@@ -2,8 +2,41 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1699859c-47fe-4541-bdb7-1a664eb770cd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/pythonProject1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/pythonProject1.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Model_relations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Model_relations/settings.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Model_relations/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Model_relations/wsgi.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/example.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0002_article_reporter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0003_customer_products.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0004_auto_20210805_0626.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0005_posts.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0006_creators.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0007_auto_20210807_0454.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0008_aricle_reporter.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0009_auto_20210807_0527.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0010_auto_20210807_0541.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0011_auto_20210807_0554.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0012_auto_20210807_0637.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0013_auto_20210807_0651.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0014_auto_20210807_1058.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0015_remove_creators_created.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/0016_article_publication.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/serializer.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/Relations/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/manage.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/template/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Model_relations/template/welcome_user.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -114,6 +147,17 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -121,6 +165,11 @@
           <url>file://$PROJECT_DIR$/main.py</url>
           <line>8</line>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Model_relations/manage.py</url>
+          <line>15</line>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

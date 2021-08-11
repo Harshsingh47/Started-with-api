@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from Relations.models import Posts,Creators
+from .models import *
 
 
 # class PostSerializer(serializers.Serializer):
@@ -18,15 +18,49 @@ from Relations.models import Posts,Creators
 #         instance.save()
 #         return instance
 
-
-class PostSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Posts
-        fields = ['id','author','text','created']
+#
+# class PostSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Posts
+#         fields = ['id','author','text','created']
 
 
 class CreatorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Creators
         fields = ['id','Name','title','language']
+
+class ArticleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Article
+        fields = "__all__"
+
+
+
+class WorkingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Working
+        fields = "__all__"
+
+
+
+
+class UserdetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserDetails
+        fields = "__all__"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
