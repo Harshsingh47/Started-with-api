@@ -83,6 +83,12 @@ urlpatterns = [
     url(r'^get/serialize_update/(?P<id>[0-9]+)/$', views.Createserialize.as_view({"put": "updateworking"}),
         name='update_data'),
 
+     url(r'^get/get_serialize/$', views.Createserialize.as_view({"get": "getallworking"}),
+        name='get_data'),
+
+    url(r'^get/serialize_delete/(?P<id>[0-9]+)/$', views.Createserialize.as_view({"delete": "deleteworking"}),
+        name='delete_data'),
+
 
 ]
 

@@ -396,16 +396,21 @@ class Createserialize(ViewSet):
             status_code =status.HTTP_404_NOT_FOUND
         return Response(response,status_code)
 
-    def updateworking(self,requeset,id,**data):
-        data = requeset.data.dict()
+    def updateworking(self,request,id,**data):
+        group_id =id
+        data = request.data.dict()
         print(data)
-        user = Working.objects.get(id=id)
-        obj = User.objects.get(id=id)
 
-        serializer = WorkingSerializer(user,data)
+        serializer = WorkingSerializer(data=data)
         if serializer.is_valid():
-            object = Working.objects.filter(id=id).update(**requeset.data)
-
+            user = data['user']
+            obj = Working.objects.get(id=group_id)
+            print(obj)
+            user_obj = User.objects.get(id=user)
+            print(user_obj)
+            data['user'] = user_obj
+            print(data)
+            object = Working.objects.filter(id=group_id).update(**data)
             response = {
                 "success" : True,
                 "message" : "Data updated"
@@ -419,6 +424,29 @@ class Createserialize(ViewSet):
             status_code = status.HTTP_404_NOT_FOUND
         return Response(response,status_code)
 
+    def getallworking(self,request):
+        data = request.data
+        serializer = WorkingSerializer(Working.objects.all(),many=True)
+        return Response(serializer.data)
+
+
+    def deleteworking(self,request,id):
+        try:
+            user = Working.objects.get(id=id).delete()
+        except Working.DoesNotExist:
+            response={
+                "success":False,
+                "message":"Id does not exists"
+            }
+            status_code = status.HTTP_404_NOT_FOUND
+        else:
+            response={
+                "success":True,
+                "message":"data deleted"
+            }
+            status_code = status.HTTP_200_OK
+
+        return Response(response,status_code)
 
 
 

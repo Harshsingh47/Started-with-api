@@ -91,7 +91,7 @@ class UserDetails(models.Model):
     email = models.EmailField(unique=True)
     address = models.CharField(max_length=100)
 
-
+# --------------------------------------------------------------------------
 class Working(models.Model):
     name = models.CharField(max_length=200)
     address = models.CharField(max_length=200)
@@ -100,3 +100,25 @@ class Working(models.Model):
 
     def __str__(self):
         return self.name
+# -----------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
